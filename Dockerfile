@@ -28,10 +28,7 @@ COPY --from=build /app/target/back-0.0.1-SNAPSHOT.jar app.jar
 
 # Exponemos el puerto
 EXPOSE 8080
-
-# HEALTHCHECK: espera 60s antes de empezar, chequea cada 30s
 HEALTHCHECK --interval=30s --timeout=5s --start-period=120s --retries=3 \
   CMD curl -f http://localhost:8080/actuator/health || exit 1
-
 # Comando de inicio, con opción a pasar flags adicionales desde el entorno
 ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
